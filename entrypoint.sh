@@ -46,7 +46,7 @@ trivy image --download-db-only
 echo "[+] Writing Trivy JSON File" 
 trivy --cache-dir $TRIVYCACHE -f json -o $ARTIFACT_FOLDER/trivy_results.json --exit-code 0 --quiet $DOCKERIMAGE
 echo "[+] Writing Trivy Text File" 
-trivy --cache-dir $TRIVYCACHE -f table -o /results/trivy_results.txt --exit-code 0 --quiet $DOCKERIMAGE
+trivy --cache-dir $TRIVYCACHE -f table --exit-code 0 --quiet $DOCKERIMAGE > /results/trivy_results.txt
 
 # fail build if there is at least 1 vulnerability of the defined severity
 #echo "[+] Trivy High and Critical Vulnerabilities"
