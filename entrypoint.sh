@@ -9,6 +9,12 @@ export TRIVY_PASSWORD=${PASSWORD}
 export DOCKLE_USERNAME=${USERNAME}
 export DOCKLE_PASSWORD=${PASSWORD}
 
+#Validar Variables
+echo "Verificando las variables"
+echo DockerImage=$DOCKERIMAGE
+echo Username=$TRIVY_USERNAME
+echo Password$TRIVY_PASSWORD
+
 cd /docker_tools
 mkdir $ARTIFACT_FOLDER
 
