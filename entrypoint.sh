@@ -13,7 +13,7 @@ export DOCKLE_PASSWORD=${PASSWORD}
 echo "Verificando las variables"
 echo DockerImage=$DOCKERIMAGE
 echo Username=$TRIVY_USERNAME
-echo Password$TRIVY_PASSWORD
+echo Password=$TRIVY_PASSWORD
 
 cd /docker_tools
 mkdir $ARTIFACT_FOLDER
