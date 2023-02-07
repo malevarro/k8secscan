@@ -9,6 +9,7 @@ apt-get install -y wget git python3 python3-pip unzip
 
 # preparing directory structure
 echo "[+] Preparing necessary directories"
+mkdir /results
 mkdir /docker_tools
 cd /docker_tools
 mkdir $TRIVYCACHE

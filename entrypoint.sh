@@ -3,7 +3,7 @@ echo "[+] Setting environment variables"
 export SHOWSTOPPER_PRIORITY="HIGH,CRITICAL"
 export TRIVYCACHE="/.trivy_cache"
 export DOCKLERCACHE="/.dockler_cache"
-export ARTIFACT_FOLDER="json"
+export ARTIFACT_FOLDER="./json"
 export TRIVY_USERNAME=${USERNAME}
 export TRIVY_PASSWORD=${PASSWORD}
 export DOCKLE_USERNAME=${USERNAME}
@@ -15,6 +15,7 @@ echo DockerImage=$DOCKERIMAGE
 echo Username=$TRIVY_USERNAME
 echo Password=$TRIVY_PASSWORD
 
+#Inicializando Carpetas
 cd /docker_tools
 mkdir $ARTIFACT_FOLDER
 
