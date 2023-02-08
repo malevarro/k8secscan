@@ -1,8 +1,8 @@
 #!/bin/bash
 echo "[+] Setting environment variables"
 export SHOWSTOPPER_PRIORITY="HIGH,CRITICAL"
-export TRIVYCACHE="/.trivy_cache"
-export DOCKLERCACHE="/.dockler_cache"
+export TRIVYCACHE="/tmp/trivy_cache"
+export DOCKLERCACHE="/tmp/dockler_cache"
 export ARTIFACT_FOLDER="./json"
 export TRIVY_USERNAME=${USERNAME}
 export TRIVY_PASSWORD=${PASSWORD}
@@ -39,19 +39,22 @@ dockle --cache-dir $DOCKLERCACHE --exit-code 1 $DOCKERIMAGE > /results/dockle_re
 # Trivy
 echo "[+] Running Trivy"
 #clean Vuln Database
-trivy image --clear-cache
+trivy --cache-dir $TRIVYCACHE image --clear-cache
+trivy --cache-dir $TRIVYCACHE image --download-db-only
 # writing finding into files
 echo "***Vulneability Assesment***"
 echo "[+] Writing Trivy JSON File" 
-trivy --cache-dir $TRIVYCACHE image -f json -o $ARTIFACT_FOLDER/trivy_results.json --exit-code 0 $DOCKERIMAGE
+trivy --cache-dir $TRIVYCACHE image --skip-db-update -f json -o $ARTIFACT_FOLDER/trivy_results.json --exit-code 0 $DOCKERIMAGE
 echo "[+] Writing Trivy Text File" 
-trivy --cache-dir $TRIVYCACHE image -f table --exit-code 0 $DOCKERIMAGE > /results/trivy_results.txt
+trivy --cache-dir $TRIVYCACHE image --skip-db-update -f table --exit-code 0 $DOCKERIMAGE > /results/trivy_results.txt
 echo "***SBOM Analysis***"
 echo "[+] Writing Trivy SBOM JSON File" 
-trivy image --format cyclonedx --output $ARTIFACT_FOLDER/trivy_sbom_results.json --exit-code 0 $DOCKERIMAGE
+trivy --cache-dir $TRIVYCACHE image --scanners vuln --format cyclonedx --output $ARTIFACT_FOLDER/trivy_sbom_results.json --exit-code 0 $DOCKERIMAGE
 echo "***Docker Compliance Analysis***"
 echo "[+] Writing Trivy Docker Compliance File" 
-trivy image --compliance docker-cis $DOCKERIMAGE > /results/trivy_compliance_results.txt
+trivy --cache-dir $TRIVYCACHE image --compliance docker-cis $DOCKERIMAGE > /results/trivy_compliance_results.txt
+echo "[+] Writing Trivy Docker Compliance JSON File" 
+trivy --cache-dir $TRIVYCACHE image --compliance docker-cis --format json --output $ARTIFACT_FOLDER/trivy_compliance_results.json $DOCKERIMAGE
 
 # fail build if there is at least 1 vulnerability of the defined severity
 #echo "[+] Trivy High and Critical Vulnerabilities"
