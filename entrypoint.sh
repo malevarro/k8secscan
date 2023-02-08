@@ -43,10 +43,21 @@ trivy image --clear-cache
 trivy image --download-db-only
 
 # writing finding into files
+echo "Vulneability Assesment"
 echo "[+] Writing Trivy JSON File" 
-trivy --cache-dir $TRIVYCACHE -f json -o $ARTIFACT_FOLDER/trivy_results.json --exit-code 0 --quiet $DOCKERIMAGE
+trivy --cache-dir $TRIVYCACHE image -f json -o $ARTIFACT_FOLDER/trivy_results.json --exit-code 0 $DOCKERIMAGE
 echo "[+] Writing Trivy Text File" 
-trivy --cache-dir $TRIVYCACHE -f table --exit-code 0 --quiet $DOCKERIMAGE > /results/trivy_results.txt
+trivy --cache-dir $TRIVYCACHE image -f table --exit-code 0 $DOCKERIMAGE > /results/trivy_results.txt
+
+# writing finding into files
+echo "SBOM Analysis"
+echo "[+] Writing Trivy SBOM JSON File" 
+trivy image --format cyclonedx --output $ARTIFACT_FOLDER/trivy_sbom_results.json --exit-code 0 $DOCKERIMAGE
+
+# writing finding into files
+echo "Docker Compliance Analysis"
+echo "[+] Writing Trivy Docker Compliance File" 
+trivy image --compliance docker-cis $DOCKERIMAGE > /results/trivy_compliance_results.txt
 
 # fail build if there is at least 1 vulnerability of the defined severity
 #echo "[+] Trivy High and Critical Vulnerabilities"
