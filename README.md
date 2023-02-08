@@ -19,6 +19,8 @@ Image for Security Scan for Security Analysis on Containers Images
         sudo git clone https://github.com/malevarro/k8secscan.git
     ```
 
+## Ejecución de análisis
+
 - Los pasos para la ejecución son los siguientes
   - Ir a la carpeta donde esta el proyecto descargado
 
