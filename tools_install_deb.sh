@@ -1,5 +1,6 @@
 #!/bin/bash
-export TRIVYCACHE="/.trivy_cache"
+export TRIVYCACHE="/tmp/trivy_cache"
+export DOCKLERCACHE="/tmp/dockler_cache"
 export ARTIFACT_FOLDER="./json"
 
 # installing all necessary stuff
@@ -13,6 +14,7 @@ mkdir /results
 mkdir /docker_tools
 cd /docker_tools
 mkdir $TRIVYCACHE
+mkdir $DOCKLERCACHE
 mkdir $ARTIFACT_FOLDER
 
 # Trivy

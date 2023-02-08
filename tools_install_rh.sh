@@ -1,12 +1,11 @@
 #!/bin/bash
-export TRIVYCACHE="/.trivy_cache"
+export TRIVYCACHE="/tmp/trivy_cache"
+export DOCKLERCACHE="/tmp/dockler_cache"
 export ARTIFACT_FOLDER="./json"
 
 # installing all necessary stuff
 echo "[+] Installing required packages"
-#apt-get update
 yum update
-#apt-get install -y wget git python3 python3-pip unzip rpm libopenscap8 ssg-debian ssg-debderived ssg-nondebian ssg-applications
 yum install -y wget git python3 python3-pip unzip
 
 # preparing directory structure
@@ -14,25 +13,22 @@ echo "[+] Preparing necessary directories"
 mkdir /docker_tools
 cd /docker_tools
 mkdir $TRIVYCACHE
+mkdir $DOCKLERCACHE
 mkdir $ARTIFACT_FOLDER
 
 # Trivy
 echo "[+] Fetching Trivy"
 export TRIVYVERSION=$(git ls-remote --refs --sort="version:refname" --tags https://github.com/aquasecurity/trivy | cut -d/ -f3-|tail -n1 | sed -e 's/^.//')
 echo "[+] Trivy Version:" ${TRIVYVERSION}
-#wget -nv --no-cache https://github.com/aquasecurity/trivy/releases/download/v${TRIVYVERSION}/trivy_${TRIVYVERSION}_Linux-64bit.deb
 wget -nv --no-cache https://github.com/aquasecurity/trivy/releases/download/v${TRIVYVERSION}/trivy_${TRIVYVERSION}_Linux-64bit.rpm
 echo "[+] Installing Trivy"
-#dpkg -i trivy_${TRIVYVERSION}_Linux-64bit.deb
 rpm -i trivy_${TRIVYVERSION}_Linux-64bit.rpm
 echo "[+] Trivy Installed "${TRIVYVERSION}
 
 # Dockle
 echo "[+] Fetching Dockle"
 export DOCKLEVERSION=$(git ls-remote --refs --sort="version:refname" --tags https://github.com/goodwithtech/dockle | cut -d/ -f3-|tail -n1 | sed -e 's/^.//')
-#wget -nv --no-cache https://github.com/goodwithtech/dockle/releases/download/v${DOCKLEVERSION}/dockle_${DOCKLEVERSION}_Linux-64bit.deb
 wget -nv --no-cache https://github.com/goodwithtech/dockle/releases/download/v${DOCKLEVERSION}/dockle_${DOCKLEVERSION}_Linux-64bit.rpm
-#dpkg -i dockle_${DOCKLEVERSION}_Linux-64bit.deb
 rpm -i dockle_${DOCKLEVERSION}_Linux-64bit.rpm
 echo "Dockle Installed "$DOCKLEVERSION
 
@@ -44,7 +40,6 @@ wget -nv --no-cache https://github.com/hadolint/hadolint/releases/download/v${HA
 
 # cleaning up
 echo "[+] Removing left-overs"
-#rm *.deb #LICENSE README.md 
 rm *.rpm #LICENSE README.md 
 
 # json converting script

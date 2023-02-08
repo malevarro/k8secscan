@@ -18,7 +18,6 @@ echo Dockerfile=${DOCKERFILE}
 
 #Inicializando Carpetas
 cd /docker_tools
-mkdir $ARTIFACT_FOLDER
 
 # Hadolint
 echo "[+] Running Hadolint"
@@ -44,9 +43,9 @@ trivy --quiet --cache-dir $TRIVYCACHE image --download-db-only
 # writing finding into files
 echo "***Vulneability Assesment***"
 echo "[+] Writing Trivy JSON File" 
-trivy --quiet --cache-dir $TRIVYCACHE image --skip-db-update -f json -o $ARTIFACT_FOLDER/trivy_results.json --exit-code 0 $DOCKERIMAGE
+trivy --quiet --cache-dir $TRIVYCACHE image -f json -o $ARTIFACT_FOLDER/trivy_results.json --exit-code 0 $DOCKERIMAGE
 echo "[+] Writing Trivy Text File" 
-trivy --quiet --cache-dir $TRIVYCACHE image --skip-db-update -f table --exit-code 0 $DOCKERIMAGE > /results/trivy_results.txt
+trivy --quiet --cache-dir $TRIVYCACHE image -f table --exit-code 0 $DOCKERIMAGE > /results/trivy_results.txt
 echo "***SBOM Analysis***"
 echo "[+] Writing Trivy SBOM JSON File" 
 trivy --quiet --cache-dir $TRIVYCACHE image --scanners vuln --format cyclonedx --output $ARTIFACT_FOLDER/trivy_sbom_results.json --exit-code 0 $DOCKERIMAGE
