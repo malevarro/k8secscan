@@ -14,6 +14,7 @@ echo "Verificando las variables"
 echo DockerImage=$DOCKERIMAGE
 echo Username=$TRIVY_USERNAME
 echo Password=$TRIVY_PASSWORD
+echo Dockerfile=${DOCKERFILE}
 
 #Inicializando Carpetas
 cd /docker_tools
@@ -40,7 +41,7 @@ dockle --cache-dir $DOCKLERCACHE --exit-code 1 $DOCKERIMAGE > /results/dockle_re
 echo "[+] Running Trivy"
 #Updating Vuln Database
 trivy image --clear-cache
-trivy image --download-db-only
+#trivy image --download-db-only
 
 # writing finding into files
 echo "Vulneability Assesment"
