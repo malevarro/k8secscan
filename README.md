@@ -4,7 +4,7 @@ Image for Security Scan for Security Analysis on Containers Images
 
 ## Elementos
 
-- Se debe realizar la creacion de las siguientes carpetas en el servidor linux
+- Se debe realizar la creación de las siguientes carpetas en el servidor Linux
 
     ```bash
         mkdir /workdir
@@ -48,9 +48,9 @@ Image for Security Scan for Security Analysis on Containers Images
 
   - Se deben tener en cuenta las siguientes variables para la ejecución del análisis:
   
-    -**DOCKERIMAGE** -> Corresponde a la imágen de contenedor que se desea analizar con las herramientas.
+    -**DOCKERIMAGE** -> Corresponde a la imagen de contenedor que se desea analizar con las herramientas.
 
-    -**DOCKERFILE** -> Corresponde al archivo de definiión del contenedor que se desea analizar con las herramientas.
+    -**DOCKERFILE** -> Corresponde al archivo de definición del contenedor que se desea analizar con las herramientas.
 
   - Ejecutar el docker, el siguientes es un ejemplo de ejecución con las variables indicadas.
 
